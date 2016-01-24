@@ -21,4 +21,5 @@ public interface ILoginPresenter {
      * 登录失败
      */
     public void loginError(int code, String msg);
+
 }

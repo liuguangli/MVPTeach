@@ -1,6 +1,7 @@
 package com.mvpteach.liuguangli.mvpteach.nolevel;
 
 import android.annotation.TargetApi;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
@@ -17,11 +18,12 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.mvpteach.liuguangli.mvpteach.R;
+import com.mvpteach.liuguangli.mvpteach.mvplevel.bean.*;
 
 import cz.msebera.android.httpclient.Header;
 
 /**
- * 登录功能无层次的设计
+ * 登录功能无层次的设计，视图逻辑和数据逻辑耦合
  */
 public class LoginActivity extends AppCompatActivity {
 
@@ -46,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
-
 
     }
 
@@ -76,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             mUsernameView.setError(getString(R.string.error_invalid_email));
             cancel = true;
         }
+
         if (!cancel){
             loginToServer(email,password);
         }
@@ -100,9 +102,24 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                UserInfo userInfo = parseRes(responseString);
+                saveInfo(userInfo);
                 loginSuc();
             }
         });
+    }
+
+    private void saveInfo(UserInfo userInfo) {
+        /*
+        为了说明逻辑，这里没有实现，假设这里使用sharedPreferences实现，那么以后想换一种方式，
+        涉及到UserInfo的地方都要修改了,而以我们的经验，通常一个App大部业务都会设计UserInfo */
+
+        SharedPreferences sharedPreferences = getSharedPreferences("user",MODE_APPEND);
+    }
+
+    private UserInfo parseRes(String string) {
+        //为了说明逻辑，这里没有实现
+        return null;
     }
 
     /**
@@ -119,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
      * 登录成功
      */
     public void loginSuc() {
+
         Toast.makeText(this,getString(R.string.login_suc),Toast.LENGTH_LONG).show();
     }
 

@@ -1,4 +1,4 @@
-package com.mvpteach.liuguangli.mvpteach.badmvp.bean;
+package com.mvpteach.liuguangli.mvpteach.nolevel;
 
 /**
  * Created by liuguangli on 16/1/24.
